@@ -34,9 +34,9 @@ const TranslationBox = ({
   };
 
   return (
-    <div className="relative">
+    <div className="relative grid gap-2 min-w-full">
       {/* Header */}
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center justify-between">
         <label className="text-sm font-medium text-gray-700">Translation</label>
         {translatedText && !isLoading && (
           <button

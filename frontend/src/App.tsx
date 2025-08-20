@@ -43,17 +43,17 @@ function App() {
     <>
       <Navbar />
       {!isSupported ? <IsNotSupported /> : null}
-      <main className="grid">
-        <section className="p-10 xl:w-[70%] xl:mx-auto">
+      <main>
+        <section className="p-10">
           <h1 className="text-2xl font-bold text-center mb-6 text-blue-500">
             Healthcare Translation Web App with Generative AI
           </h1>
-          <div className="flex flex-col gap-4 min-w-full justify-center items-center">
-            <LanguageSelector className="mb-6" />
-            <div className="grid lg:grid-cols-2 gap-4 items-center justify-center w-full">
+          <div className="flex flex-col gap-4">
+            <LanguageSelector className="mb-6 xl:w-[45%] mx-auto" />
+            <div className="flex flex-col xl:flex-row mx-auto gap-4 justify-center">
               <TranscriptionBox
                 transcribedText={transcript}
-                className="border-blue-500 lg:w-[100%]"
+                className="border-blue-500"
               />
               <TranslationBox
                 translatedText={translatedText}
@@ -62,23 +62,23 @@ function App() {
                 className="border-blue-500"
                 readOnly={true}
               />
-              <div className="flex flex-col justify-center items-center p-4 gap-4">
-                <Button
-                  onClick={() => generateSpeech(translatedText)}
-                  disabled={loading}
-                >
-                  {loading ? "Generating..." : "Generate Speech"}
-                </Button>
+            </div>
+            <div className="flex flex-col justify-center items-center p-4 gap-4">
+              <Button
+                onClick={() => generateSpeech(translatedText)}
+                disabled={loading}
+              >
+                {loading ? "Generating..." : "Generate Speech"}
+              </Button>
 
-                {errorTTS && <p style={{ color: "red" }}>{errorTTS}</p>}
+              {errorTTS && <p style={{ color: "red" }}>{errorTTS}</p>}
 
-                {audioSrc && (
-                  <div>
-                    <p>Speech generated:</p>
-                    <audio controls src={audioSrc} autoPlay />
-                  </div>
-                )}
-              </div>
+              {audioSrc && (
+                <div>
+                  <p>Speech generated:</p>
+                  <audio controls src={audioSrc} autoPlay />
+                </div>
+              )}
             </div>
 
             {/* Speak Button */}
@@ -89,7 +89,7 @@ function App() {
               <Button
                 id="speak-btn"
                 aria-label="Speak translation"
-                className={`h-25 w-25  shadow-xl rounded-full text-lg font-semibold cursor-pointer hover:bg-blue-700 ${isSpeaking ? "animate-pulse bg-blue-300" : "bg-blue-500"}`}
+                className={`h-25 w-25  shadow-xl rounded-full text-lg font-semibold cursor-pointer hover:bg-blue-800 ${isSpeaking ? "animate-pulse bg-blue-300" : "bg-blue-500"}`}
                 onClick={() => {
                   handleSpeak();
                 }}

@@ -12,7 +12,7 @@ const TranscriptionBox = ({
   onChange,
 }: TranscriptionBoxProps) => {
   return (
-    <div className="flex flex-col justify-between gap-2">
+    <div className="grid gap-2 min-w-full">
       <label className="text-sm font-medium text-gray-700">Transcription</label>
       <Textarea
         placeholder="Speak and transcription will be shown here."
