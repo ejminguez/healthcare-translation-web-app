@@ -8,7 +8,7 @@ import { useSpeechToText } from "@mazka/react-speech-to-text";
 import { useTranslationStore } from "./stores/useTranslationStore";
 import { LanguageSelector } from "./components/LanguageSelector";
 import { useRealtimeTranslation } from "./hooks/useRealTimeTranslation";
-import { useEffect } from "react";
+import { useMurfSpeech } from "./actions/useMurfSpeech";
 
 function App() {
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -20,20 +20,11 @@ function App() {
     stopListening,
   } = useSpeechToText();
 
+  const { audioSrc, loading, errorTTS, generateSpeech } = useMurfSpeech();
+
   const { translatedText, isTranslating, error, setTranslatedText } =
     useTranslationStore();
   useRealtimeTranslation({ transcript });
-
-  const speak = useTranslationStore((s) => s.speak);
-
-  useEffect(() => {
-    const preloadVoices = () => {
-      speechSynthesis.getVoices();
-    };
-
-    window.speechSynthesis.onvoiceschanged = preloadVoices;
-    preloadVoices();
-  }, []);
 
   const handleSpeak = async () => {
     setIsSpeaking((prev) => {
@@ -57,7 +48,7 @@ function App() {
           <h1 className="text-2xl font-bold text-center mb-6 text-blue-500">
             Healthcare Translation Web App with Generative AI
           </h1>
-          <div className="flex flex-col gap-4 min-w-full">
+          <div className="flex flex-col gap-4 min-w-full justify-center items-center">
             <LanguageSelector className="mb-6" />
             <div className="grid lg:grid-cols-2 gap-4 items-center justify-center w-full">
               <TranscriptionBox
@@ -71,7 +62,23 @@ function App() {
                 className="border-blue-500"
                 readOnly={true}
               />
-              <Button onClick={speak}>Speak</Button>
+              <div className="flex flex-col justify-center items-center p-4 gap-4">
+                <Button
+                  onClick={() => generateSpeech(translatedText)}
+                  disabled={loading}
+                >
+                  {loading ? "Generating..." : "Generate Speech"}
+                </Button>
+
+                {errorTTS && <p style={{ color: "red" }}>{errorTTS}</p>}
+
+                {audioSrc && (
+                  <div>
+                    <p>Speech generated:</p>
+                    <audio controls src={audioSrc} autoPlay />
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Speak Button */}

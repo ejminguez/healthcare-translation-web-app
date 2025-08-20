@@ -68,7 +68,7 @@ const TranslationBox = ({
                 ? "Translation error occurred"
                 : "Translation will appear here..."
           }
-          className={`min-h-30 pr-10 ${className} ${
+          className={`min-h-30 min-w-60 pr-10 ${className} ${
             error
               ? "border-red-300 focus:border-red-500 focus:ring-red-500"
               : isLoading
