@@ -22,7 +22,7 @@ const SUPPORTED_LANGUAGES = [
   { code: "Danish", name: "Danish" },
   { code: "Finnish", name: "Finnish" },
   { code: "Polish", name: "Polish" },
-  { code: "Tagalog", name: "Bisaya" },
+  { code: "Tagalog", name: "Tagalog" },
 ];
 
 interface LanguageSelectorProps {

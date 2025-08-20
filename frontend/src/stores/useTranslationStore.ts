@@ -12,9 +12,10 @@ type TranslationState = {
   setTargetLanguage: (language: string) => void;
   setSourceLanguage: (language: string) => void;
   clearTranslation: () => void;
+  speak: () => void;
 };
 
-export const useTranslationStore = create<TranslationState>((set) => ({
+export const useTranslationStore = create<TranslationState>((set, get) => ({
   translatedText: "",
   isTranslating: false,
   error: null,
@@ -31,4 +32,46 @@ export const useTranslationStore = create<TranslationState>((set) => ({
       error: null,
       isTranslating: false,
     }),
+  speak: () => {
+    const { translatedText, targetLanguage } = get();
+    if (!translatedText) return;
+
+    const utterance = new SpeechSynthesisUtterance(translatedText);
+
+    // Map targetLanguage to approximate SpeechSynthesis voices
+    const languageMap: Record<string, string> = {
+      English: "en",
+      Spanish: "es",
+      French: "fr",
+      German: "de",
+      Italian: "it",
+      Portuguese: "pt",
+      Russian: "ru",
+      Japanese: "ja",
+      Korean: "ko",
+      "Chinese (Simplified)": "zh-CN",
+      "Chinese (Traditional)": "zh-TW",
+      Arabic: "ar",
+      Hindi: "hi",
+      Dutch: "nl",
+      Swedish: "sv",
+      Norwegian: "no",
+      Danish: "da",
+      Finnish: "fi",
+      Polish: "pl",
+      Tagalog: "tl",
+      Bisaya: "tl", // approximate
+    };
+
+    const langCode = languageMap[targetLanguage] || "en";
+
+    // Pick a voice that matches the language code
+    utterance.voice =
+      speechSynthesis.getVoices().find((v) => v.lang.startsWith(langCode)) ||
+      null;
+
+    utterance.rate = 1;
+    utterance.pitch = 1.2;
+    speechSynthesis.speak(utterance);
+  },
 }));

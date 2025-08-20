@@ -15,8 +15,8 @@ const TranscriptionBox = ({
     <div className="flex flex-col justify-between gap-2">
       <label className="text-sm font-medium text-gray-700">Transcription</label>
       <Textarea
-        placeholder="This is where the transcribed text is shown."
-        className={`min-h-30 ${className}`}
+        placeholder="Speak and transcription will be shown here."
+        className={`min-h-30 min-w-full ${className}`}
         value={transcribedText || ""}
         onChange={(e) => onChange?.(e.target.value)}
       />

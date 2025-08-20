@@ -1,6 +1,6 @@
 // hooks/useRealtimeTranslation.ts
 import { useEffect, useRef } from "react";
-import { openai } from "@/actions/openAI_client";
+import { openai } from "@/client/openAI_client";
 import { useTranslationStore } from "@/stores/useTranslationStore";
 
 interface Props {
@@ -29,7 +29,6 @@ export const useRealtimeTranslation = ({
     }
 
     if (!transcript?.trim()) {
-      setTranslatedText("");
       return;
     }
 
