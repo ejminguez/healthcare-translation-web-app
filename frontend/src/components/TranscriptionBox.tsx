@@ -16,7 +16,7 @@ const TranscriptionBox = ({
       <label className="text-sm font-medium text-gray-700">Transcription</label>
       <Textarea
         placeholder="Speak and transcription will be shown here."
-        className={`min-h-30 min-w-full ${className}`}
+        className={`min-h-30 min-w-60 ${className}`}
         value={transcribedText || ""}
         onChange={(e) => onChange?.(e.target.value)}
       />
